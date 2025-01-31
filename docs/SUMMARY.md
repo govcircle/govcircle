@@ -11,8 +11,8 @@
 
 * [Constitution](modules/editor.md)
 * [Circle](modules/markdown/README.md)
-  * [Informal](modules/markdown/informal.md)
-  * [Formal](modules/markdown/formal.md)
+    * [Informal](modules/markdown/informal.md)
+    * [Formal](modules/markdown/formal.md)
 * [Space](modules/images-and-media.md)
 * [Governance Tool](modules/interactive-blocks.md)
 * [Action Checker](modules/openapi.md)
