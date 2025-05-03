@@ -47,10 +47,39 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+			<groupId>io.adabox</groupId>
+			<artifactId>ogmios-java-client</artifactId>
+			<version>1.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.bloxbean.cardano</groupId>
+			<artifactId>cardano-client-lib</artifactId>
+			<version>0.6.4</version>
+		</dependency>
+
+		<!-- For Koios backend -->
+		<dependency>
+			<groupId>com.bloxbean.cardano</groupId>
+			<artifactId>cardano-client-backend-koios</artifactId>
+			<version>0.6.4</version>
+		</dependency>
+
+		<!-- For Ogmios backend -->
+		<dependency>
+			<groupId>com.bloxbean.cardano</groupId>
+			<artifactId>cardano-client-backend-ogmios</artifactId>
+			<version>0.6.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
