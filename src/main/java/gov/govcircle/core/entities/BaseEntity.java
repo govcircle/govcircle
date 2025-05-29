@@ -1,9 +1,10 @@
-package gov.govcircle.base.model.entity;
+package gov.govcircle.core.entities;
 
-import gov.govcircle.comon.models.entity.ApplicationUser;
+import gov.govcircle.comon.security.model.entity.ApplicationUser;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
 
 import java.time.LocalDateTime;
 

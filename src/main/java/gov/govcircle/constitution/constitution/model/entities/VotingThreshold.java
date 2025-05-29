@@ -1,8 +1,8 @@
 package gov.govcircle.constitution.constitution.model.entities;
 
-import gov.govcircle.base.model.entity.BaseEntity;
-import gov.govcircle.comon.models.entity.Actor;
+import gov.govcircle.comon.security.model.entity.Role;
 import gov.govcircle.constitution.constitution.model.enums.ActionType;
+import gov.govcircle.core.entities.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,7 +21,7 @@ public class VotingThreshold extends BaseEntity {
     private ActionType actionType;
 
     @ManyToOne
-    private Actor actor;
+    private Role role;
 
     private int percentage;
 

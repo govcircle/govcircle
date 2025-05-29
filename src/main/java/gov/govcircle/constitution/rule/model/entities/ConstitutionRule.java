@@ -1,6 +1,7 @@
 package gov.govcircle.constitution.rule.model.entities;
 
-import gov.govcircle.base.model.entity.BaseEntity;
+import gov.govcircle.constitution.constitution.model.entities.Constitution;
+import gov.govcircle.core.entities.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
@@ -11,12 +12,16 @@ import lombok.experimental.Accessors;
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-public class RuleRelation extends BaseEntity {
+public class ConstitutionRule extends BaseEntity {
 
     @ManyToOne
-    private Rule srcRule;
+    private Rule rule;
 
     @ManyToOne
-    private Rule relatedRule;
+    private Constitution constitution;
 
+    private int order;
+
+    @ManyToOne
+    private Rule parentRule;
 }

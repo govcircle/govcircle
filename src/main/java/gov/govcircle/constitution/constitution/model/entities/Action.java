@@ -1,8 +1,8 @@
 package gov.govcircle.constitution.constitution.model.entities;
 
-import gov.govcircle.base.model.entity.BaseEntity;
 import gov.govcircle.constitution.constitution.model.enums.ActionStatus;
 import gov.govcircle.constitution.constitution.model.enums.ActionType;
+import gov.govcircle.core.entities.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

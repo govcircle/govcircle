@@ -1,6 +1,6 @@
 package gov.govcircle.constitution.constitution.model.entities;
 
-import gov.govcircle.base.model.entity.BaseEntity;
+import gov.govcircle.core.entities.BaseEntity;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
