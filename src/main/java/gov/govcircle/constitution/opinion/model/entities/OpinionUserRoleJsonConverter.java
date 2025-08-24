@@ -1,4 +1,4 @@
-package gov.govcircle.constitution.amendment.model.entities;
+package gov.govcircle.constitution.opinion.model.entities;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -9,25 +9,27 @@ import jakarta.persistence.Converter;
 import java.util.List;
 
 @Converter
-public class AmendmentUserRoleJsonConverter implements AttributeConverter<List<AmendmentUserRole>, String> {
+public class OpinionUserRoleJsonConverter implements AttributeConverter<List<OpinionUserRole>, String> {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public String convertToDatabaseColumn(List<AmendmentUserRole> amendmentUserRoleList) {
+    public String convertToDatabaseColumn(List<OpinionUserRole> opinionUserRoleList) {
         try {
-            return objectMapper.writeValueAsString(amendmentUserRoleList);
+            return objectMapper.writeValueAsString(opinionUserRoleList);
 
         } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException("Error converting AmendmentUserRole list to JSON string", e);
+            throw new IllegalArgumentException("Error converting OpinionUserRoleList list to JSON string", e);
 
         }
+
     }
 
     @Override
-    public List<AmendmentUserRole> convertToEntityAttribute(String json) {
+    public List<OpinionUserRole> convertToEntityAttribute(String json) {
         if (json == null) {
             return null;
+
         }
         try {
             return objectMapper.readValue(json, new TypeReference<>() {});
@@ -36,5 +38,7 @@ public class AmendmentUserRoleJsonConverter implements AttributeConverter<List<A
             throw new IllegalArgumentException("Error converting JSON string to UserRole List", e);
 
         }
+
     }
+
 }

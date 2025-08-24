@@ -1,4 +1,4 @@
-package gov.govcircle.constitution.amendment.model.entities;
+package gov.govcircle.constitution.opinion.model.entities;
 
 import jakarta.persistence.Embeddable;
 import lombok.Data;

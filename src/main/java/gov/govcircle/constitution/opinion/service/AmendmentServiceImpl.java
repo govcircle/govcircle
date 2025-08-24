@@ -1,6 +1,6 @@
-package gov.govcircle.constitution.amendment.service;
+package gov.govcircle.constitution.opinion.service;
 
-import gov.govcircle.constitution.amendment.repository.AmendmentRepository;
+import gov.govcircle.constitution.opinion.repository.AmendmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -28,26 +28,27 @@ public class UserDetailsInfoDTO implements UserDetails {
         this.nounc = applicationUser.getNonce();
         this.username = applicationUser.getUsername();
         this.userAddress = applicationUser.getUserAddress();
-        this.authorities = new ArrayList<>(Objects.nonNull(applicationUser.getUserRoles())
-                ? applicationUser.getUserRoles()
-                .stream()
-                .flatMap(userRole -> userRole
-                        .getRole()
-                        .getAuthorities()
-                        .stream()
-                )
-                .map(SimpleGrantedAuthority::new)
-                .toList()
-                : new ArrayList<>());
-        authorities.addAll(
-                applicationUser
-                        .getUserRoles()
-                        .stream()
-                        .map(UserRole::getRole)
-                        .map(role -> Configs.ROLE + role.getTitle())
-                        .map(SimpleGrantedAuthority::new)
-                        .toList()
-        );
+        authorities = new ArrayList<>();
+//        this.authorities = new ArrayList<>(Objects.nonNull(applicationUser.getUserRoles())
+//                ? applicationUser.getUserRoles()
+//                .stream()
+//                .flatMap(userRole -> userRole
+//                        .getRole()
+//                        .getAuthorities()
+//                        .stream()
+//                )
+//                .map(SimpleGrantedAuthority::new)
+//                .toList()
+//                : new ArrayList<>());
+//        authorities.addAll(
+//                applicationUser
+//                        .getUserRoles()
+//                        .stream()
+//                        .map(UserRole::getRole)
+//                        .map(role -> Configs.ROLE + role.getTitle())
+//                        .map(SimpleGrantedAuthority::new)
+//                        .toList()
+//        );
         authorities.addAll(
                 applicationUser
                         .getAuthorities()

@@ -1,4 +1,4 @@
-package gov.govcircle.constitution.amendment.model.entities;
+package gov.govcircle.constitution.opinion.model.entities;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

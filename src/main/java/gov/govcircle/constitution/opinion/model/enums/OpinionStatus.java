@@ -1,6 +1,6 @@
-package gov.govcircle.constitution.amendment.model.enums;
+package gov.govcircle.constitution.opinion.model.enums;
 
-public enum AmendmentStatus {
+public enum OpinionStatus {
 
     CONFLICT, // TODO: NOTIFICATION NEEDED
     DRAFT,

@@ -1,6 +1,6 @@
 package gov.govcircle.constitution.rule.model.entities;
 
-import gov.govcircle.constitution.amendment.model.enums.RuleChangeType;
+import gov.govcircle.constitution.opinion.model.enums.AmendmentType;
 import gov.govcircle.core.entities.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,6 +23,6 @@ public class RuleChangeHistory extends BaseEntity {
     private ConstitutionRule revisedRule;
 
     @Enumerated(EnumType.STRING)
-    private RuleChangeType changeType;
+    private AmendmentType amendmentType;
 
 }

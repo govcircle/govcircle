@@ -1,7 +1,7 @@
-package gov.govcircle.constitution.amendment.model.entities;
+package gov.govcircle.constitution.opinion.model.entities;
 
 import gov.govcircle.comon.security.model.entity.ApplicationUser;
-import gov.govcircle.constitution.amendment.model.enums.AmendmentStatus;
+import gov.govcircle.constitution.opinion.model.enums.OpinionStatus;
 import gov.govcircle.core.entities.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -14,18 +14,18 @@ import java.util.List;
 @Entity
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class Amendment extends BaseEntity {
+public class Opinion extends BaseEntity {
 
     @OneToOne
     private ApplicationUser owner;
     private String intention;
 
-    @Convert(converter = AmendmentUserRoleJsonConverter.class)
+    @Convert(converter = OpinionUserRoleJsonConverter.class)
     @Column(columnDefinition = "TEXT")
-    private List<AmendmentUserRole> userAct;
+    private List<OpinionUserRole> userAct;
 
     @Enumerated(EnumType.STRING)
-    private AmendmentStatus status;
+    private OpinionStatus status;
 
 
 }
