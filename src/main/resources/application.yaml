@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    gov-circle:
+      url: jdbc:postgresql://localhost:5432/govcircle
+      username: sa
+      password: 123
+      driver-class-name: org.postgresql.Driver
+
+    cardano-db-sync:
+      url: jdbc:postgresql://dbsync-v3.demeter.run:5432/dbsync-mainnet
+      username: dbsync1l7f5csmkl5xq2e69fm8
+      password: nI8AubssKco
+      driver-class-name: org.postgresql.Driver
+
+server:
+  port: 8081
