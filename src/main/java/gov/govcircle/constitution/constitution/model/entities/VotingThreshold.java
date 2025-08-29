@@ -1,6 +1,6 @@
 package gov.govcircle.constitution.constitution.model.entities;
 
-import gov.govcircle.comon.security.model.entity.Role;
+import gov.govcircle.common.security.model.entity.Role;
 import gov.govcircle.constitution.constitution.model.enums.ActionType;
 import gov.govcircle.core.entities.BaseEntity;
 import jakarta.persistence.Entity;

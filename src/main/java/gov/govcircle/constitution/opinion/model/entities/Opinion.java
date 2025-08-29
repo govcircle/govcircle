@@ -1,6 +1,6 @@
 package gov.govcircle.constitution.opinion.model.entities;
 
-import gov.govcircle.comon.security.model.entity.ApplicationUser;
+import gov.govcircle.common.security.model.entity.ApplicationUser;
 import gov.govcircle.constitution.opinion.model.enums.OpinionStatus;
 import gov.govcircle.core.entities.BaseEntity;
 import jakarta.persistence.*;
