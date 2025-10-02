@@ -29,6 +29,9 @@ public class RoleAuthority extends BaseEntity {
     )
     private Authority authority;
 
+    @Column(name = "start_slot")
     private int startSlot;
+
+    @Column(name = "end_slot")
     private int endSlot;
 }

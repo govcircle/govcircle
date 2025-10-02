@@ -12,7 +12,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "gc_authority")
+@Table(name = "gc_role")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class Role extends BaseEntity {

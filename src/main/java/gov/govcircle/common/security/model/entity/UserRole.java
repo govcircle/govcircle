@@ -32,7 +32,10 @@ public class UserRole extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RoleRegistrationStatus actorRegistrationStatus;
 
-    private int startEpoch;
-    private int endEpoch;
+    @Column(name = "start_slot")
+    private int startSlot;
+
+    @Column(name = "end_slot")
+    private int endSlot;
 
 }
