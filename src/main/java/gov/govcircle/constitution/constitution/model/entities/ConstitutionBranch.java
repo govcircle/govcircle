@@ -12,9 +12,10 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name = "gc_constitution_branch")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class Constitution extends BaseEntity {
+public class ConstitutionBranch extends BaseEntity {
 
 
     @OneToOne

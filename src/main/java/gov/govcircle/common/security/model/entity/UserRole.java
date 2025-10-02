@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Entity(name = "user_role")
+@Table(name = "gc_user_role")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class UserRole extends BaseEntity {
