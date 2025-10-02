@@ -1,15 +1,17 @@
 package gov.govcircle.constitution.rule.model.entities;
 
-import gov.govcircle.constitution.constitution.model.entities.Constitution;
+import gov.govcircle.constitution.constitution.model.entities.ConstitutionBranch;
 import gov.govcircle.core.entities.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 @Data
 @Entity
+@Table(name = "gc_constitution_rule")
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 public class ConstitutionRule extends BaseEntity {
@@ -18,7 +20,7 @@ public class ConstitutionRule extends BaseEntity {
     private Rule rule;
 
     @ManyToOne
-    private Constitution constitution;
+    private ConstitutionBranch constitution;
 
     private int order;
 

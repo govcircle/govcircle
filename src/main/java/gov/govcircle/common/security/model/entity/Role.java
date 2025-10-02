@@ -3,10 +3,7 @@ package gov.govcircle.common.security.model.entity;
 
 import gov.govcircle.common.config.Configs;
 import gov.govcircle.core.entities.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -14,7 +11,8 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 @Data
-@Entity(name = "Role")
+@Entity
+@Table(name = "gc_role")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class Role extends BaseEntity {
@@ -23,6 +21,7 @@ public class Role extends BaseEntity {
     private String title;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @JoinTable(name = "gc_role_authorities")
     private List<String> authorities;
 
     public static Role defaultRole() {

@@ -1,6 +1,6 @@
 package gov.govcircle.constitution.opinion.model.entities;
 
-import gov.govcircle.constitution.constitution.model.entities.Constitution;
+import gov.govcircle.constitution.constitution.model.entities.ConstitutionBranch;
 import gov.govcircle.constitution.opinion.model.enums.AmendmentType;
 import gov.govcircle.core.entities.BaseEntity;
 import jakarta.persistence.*;
@@ -12,12 +12,13 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name = "gc_amendment")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class Amendment extends BaseEntity {
 
     @ManyToOne
-    private Constitution constitution;
+    private ConstitutionBranch constitution;
 
     @ManyToOne
     private Opinion opinion;

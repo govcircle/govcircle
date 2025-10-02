@@ -6,12 +6,14 @@ import gov.govcircle.core.entities.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 @Data
 @Entity
+@Table(name = "gc_action")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class Action extends BaseEntity {

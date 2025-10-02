@@ -12,6 +12,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name = "gc_opinion")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class Opinion extends BaseEntity {

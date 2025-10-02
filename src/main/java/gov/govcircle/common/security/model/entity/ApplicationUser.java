@@ -9,6 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name = "gc_application_user")
 @EqualsAndHashCode(callSuper = true)
 public class ApplicationUser extends BaseEntity {
 
@@ -21,9 +22,11 @@ public class ApplicationUser extends BaseEntity {
     private String nonce;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @JoinTable(name = "gc_user_authorities")
     private List<String> authorities;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinTable(name = "gc_user_role")
     private List<UserRole> userRoles;
 
 }
