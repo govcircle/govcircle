@@ -12,20 +12,33 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "gc_role")
+@Table(name = "gc_authority")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class Role extends BaseEntity {
 
-    @Column(nullable = false, unique = true)
+    @Column(
+            nullable = false,
+            unique = true
+    )
     private String title;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @JoinTable(name = "gc_role_authorities")
-    private List<String> authorities;
+    @Column(
+            nullable = false,
+            unique = true
+    )
+    private String code;
+
+
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.MERGE
+    )
+    private List<RoleAuthority> authorities;
 
     public static Role defaultRole() {
         return (Role) new Role()
                 .setId(Configs.DEFAULT_ROLE_ID);
     }
+
 }
