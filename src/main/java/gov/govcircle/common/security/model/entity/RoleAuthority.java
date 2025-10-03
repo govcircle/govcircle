@@ -8,34 +8,30 @@ import lombok.experimental.Accessors;
 
 @Data
 @Entity
-@Table(name = "gc_user_role")
+@Table(name = "gc_role_authority")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class UserRole extends BaseEntity {
+public class RoleAuthority extends BaseEntity {
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(
             name = "role_id",
-            foreignKey = @ForeignKey(name = "ur_role_fk_id"),
+            foreignKey = @ForeignKey(name = "ra_role_fk_id"),
             nullable = false
     )
     private Role role;
 
     @ManyToOne
     @JoinColumn(
-            name = "user_id",
-            foreignKey = @ForeignKey(name = "ur_user_fk_id"),
+            name = "authority_id",
+            foreignKey = @ForeignKey(name = "ra_authority_fk_id"),
             nullable = false
     )
-    private ApplicationUser user;
-
-    @Enumerated(EnumType.STRING)
-    private RoleRegistrationStatus actorRegistrationStatus;
+    private Authority authority;
 
     @Column(name = "start_slot")
     private int startSlot;
 
     @Column(name = "end_slot")
     private int endSlot;
-
 }

@@ -1,6 +1,7 @@
 package gov.govcircle.common.config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -18,8 +19,25 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
+
+
 @Configuration
 @EnableTransactionManagement
+@EntityScan(
+        basePackages = {
+                // Application
+                "gov.govcircle.common.security.model.entity",
+
+                // Constitution
+                "gov.govcircle.constitution.constitution.model.entities",
+
+                // Opinion
+                "gov.govcircle.constitution.opinion.model.entities",
+
+                // Rule
+                "gov.govcircle.constitution.rule.model.entities"
+        }
+)
 @EnableJpaRepositories(
         basePackages = {
                 // Application
@@ -35,14 +53,15 @@ import java.util.Map;
                 // Rule
                 "gov.govcircle.constitution.rule.repository"
         },
-        entityManagerFactoryRef = "govCircleEntityManagerFactory",
+        entityManagerFactoryRef = "entityManagerFactory",
         transactionManagerRef = "govCircleTransactionManager"
+
 )
 public class GovCircleDataSourceConfiguration {
 
     @Primary
-    @Bean(name = "govCircleEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean govCircleEntityManagerFactory(
+    @Bean(name = "entityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
             @Qualifier("govCircleDataSource") DataSource dataSource
     ) {
         LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
@@ -76,7 +95,7 @@ public class GovCircleDataSourceConfiguration {
     @Primary
     @Bean(name = "govCircleTransactionManager")
     public PlatformTransactionManager govCircleTransactionManager(
-            @Qualifier("govCircleEntityManagerFactory") LocalContainerEntityManagerFactoryBean govCircleEntityManagerFactory
+            @Qualifier("entityManagerFactory") LocalContainerEntityManagerFactoryBean govCircleEntityManagerFactory
     ) {
         JpaTransactionManager manager = new JpaTransactionManager();
         manager.setEntityManagerFactory(govCircleEntityManagerFactory.getObject());

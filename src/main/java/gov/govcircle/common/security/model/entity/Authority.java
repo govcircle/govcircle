@@ -1,21 +1,17 @@
 package gov.govcircle.common.security.model.entity;
 
-
-import gov.govcircle.common.config.Configs;
 import gov.govcircle.core.entities.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.util.List;
-
 @Data
 @Entity
-@Table(name = "gc_role")
+@Table(name = "gc_authority")
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
-public class Role extends BaseEntity {
+@EqualsAndHashCode(callSuper = false)
+public class Authority extends BaseEntity {
 
     @Column(
             nullable = false,
@@ -30,17 +26,9 @@ public class Role extends BaseEntity {
     )
     private Integer code;
 
+    @Enumerated(EnumType.STRING)
+    private AuthorityType authorityType;
 
-    @OneToMany(
-            mappedBy = "role",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
-    )
-    private List<RoleAuthority> authorities;
 
-    public static Role defaultRole() {
-        return (Role) new Role()
-                .setId(Configs.DEFAULT_ROLE_ID);
-    }
 
 }

@@ -21,12 +21,18 @@ public class ApplicationUser extends BaseEntity {
     private String email;
     private String nonce;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @JoinTable(name = "gc_user_authorities")
-    private List<String> authorities;
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.MERGE
+    )
+    private List<UserAuthority> authorities;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(name = "gc_user_role")
-    private List<UserRole> userRoles;
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.MERGE
+    )
+    private List<UserRole> roles;
 
 }

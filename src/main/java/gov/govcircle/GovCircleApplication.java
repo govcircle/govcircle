@@ -37,19 +37,7 @@ public class GovCircleApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		System.out.println("started to save");
-
-		Role simpleRole = new Role();
-		simpleRole.setTitle("SIMPLE");
-		roleRepository.save(simpleRole);
-		Optional<StakeAddress> stakeAddressOptional = stakeAddressService.findById(4784310L);
-		if (stakeAddressOptional.isPresent()) {
-			StakeAddress stakeAddress = stakeAddressOptional.get();
-			System.out.println(stakeAddress);
-
-		}
-
-		System.out.println("finished saving");
+	System.out.println("GovCircle Started");
 
 	}
 }

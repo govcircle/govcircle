@@ -1,6 +1,8 @@
 package gov.govcircle.common.security.model.dto;
 
+import gov.govcircle.common.config.Configs;
 import gov.govcircle.common.security.model.entity.ApplicationUser;
+import gov.govcircle.common.security.model.entity.UserRole;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 public class UserDetailsInfoDTO implements UserDetails {
@@ -23,32 +26,41 @@ public class UserDetailsInfoDTO implements UserDetails {
         this.nounc = applicationUser.getNonce();
         this.username = applicationUser.getUsername();
         this.userAddress = applicationUser.getUserAddress();
-        authorities = new ArrayList<>();
-//        this.authorities = new ArrayList<>(Objects.nonNull(applicationUser.getUserRoles())
-//                ? applicationUser.getUserRoles()
-//                .stream()
-//                .flatMap(userRole -> userRole
-//                        .getRole()
-//                        .getAuthorities()
-//                        .stream()
-//                )
-//                .map(SimpleGrantedAuthority::new)
-//                .toList()
-//                : new ArrayList<>());
-//        authorities.addAll(
-//                applicationUser
-//                        .getUserRoles()
-//                        .stream()
-//                        .map(UserRole::getRole)
-//                        .map(role -> Configs.ROLE + role.getTitle())
-//                        .map(SimpleGrantedAuthority::new)
-//                        .toList()
-//        );
+        this.authorities = new ArrayList<>(Objects.nonNull(applicationUser.getRoles())
+                ? applicationUser.getRoles()
+                .stream()
+                .flatMap(userRole -> userRole
+                        .getRole()
+                        .getAuthorities()
+                        .stream()
+                )
+                .map(userAuthority -> {
+                    String title = userAuthority
+                            .getAuthority()
+                            .getTitle();
+                    return new SimpleGrantedAuthority(title);
+                })
+                .toList()
+                : new ArrayList<>());
+        authorities.addAll(
+                applicationUser
+                        .getRoles()
+                        .stream()
+                        .map(UserRole::getRole)
+                        .map(role -> Configs.ROLE + role.getTitle())
+                        .map(SimpleGrantedAuthority::new)
+                        .toList()
+        );
         authorities.addAll(
                 applicationUser
                         .getAuthorities()
                         .stream()
-                        .map(SimpleGrantedAuthority::new)
+                        .map(userAuthority -> {
+                            String title = userAuthority
+                                    .getAuthority()
+                                    .getTitle();
+                            return new SimpleGrantedAuthority(title);
+                        })
                         .toList()
         );
     }

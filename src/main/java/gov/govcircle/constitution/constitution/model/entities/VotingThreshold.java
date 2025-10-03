@@ -19,6 +19,11 @@ public class VotingThreshold extends BaseEntity {
     private ActionType actionType;
 
     @ManyToOne
+    @JoinColumn(
+            name = "role_id",
+            foreignKey = @ForeignKey(name = "voting_threshold_role_fk_id"),
+            nullable = false
+    )
     private Role role;
 
     private int percentage;
