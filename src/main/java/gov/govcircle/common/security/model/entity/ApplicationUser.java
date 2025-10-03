@@ -22,12 +22,14 @@ public class ApplicationUser extends BaseEntity {
     private String nonce;
 
     @OneToMany(
+            mappedBy = "user",
             fetch = FetchType.LAZY,
             cascade = CascadeType.MERGE
     )
     private List<UserAuthority> authorities;
 
     @OneToMany(
+            mappedBy = "user",
             fetch = FetchType.LAZY,
             cascade = CascadeType.MERGE
     )

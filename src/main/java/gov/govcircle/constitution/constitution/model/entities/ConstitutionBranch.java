@@ -12,13 +12,22 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "gc_constitution_branch")
+@Table(
+        name = "gc_constitution_branch",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"gov_action_id"}, name = "opinion_gov_action_unique_key")
+        }
+)
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class ConstitutionBranch extends BaseEntity {
 
 
     @OneToOne
+    @JoinColumn(
+            name = "gov_action_id",
+            foreignKey = @ForeignKey(name = "opinion_gov_action_fk_id")
+    )
     private Action govAction;
 
     private String dataHash;

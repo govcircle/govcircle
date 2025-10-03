@@ -15,9 +15,19 @@ import lombok.experimental.Accessors;
 public class RuleChangeHistory extends BaseEntity {
 
     @ManyToOne
+    @JoinColumn(
+            name = "base_rule_id",
+            foreignKey = @ForeignKey(name = "rule_change_base_rule_fk_id"),
+            nullable = false
+    )
     private ConstitutionRule baseRule;
 
     @ManyToOne
+    @JoinColumn(
+            name = "revised_rule_id",
+            foreignKey = @ForeignKey(name = "rule_change_revised_rule_fk_id"),
+            nullable = false
+    )
     private ConstitutionRule revisedRule;
 
     @Enumerated(EnumType.STRING)

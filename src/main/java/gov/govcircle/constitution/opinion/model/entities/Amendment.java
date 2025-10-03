@@ -18,9 +18,19 @@ import java.util.List;
 public class Amendment extends BaseEntity {
 
     @ManyToOne
+    @JoinColumn(
+            name = "constitution_id",
+            foreignKey = @ForeignKey(name = "amendment_constitution_fk_id"),
+            nullable = false
+    )
     private ConstitutionBranch constitution;
 
     @ManyToOne
+    @JoinColumn(
+            name = "opinion_id",
+            foreignKey = @ForeignKey(name = "amendment_opinion_fk_id"),
+            nullable = false
+    )
     private Opinion opinion;
 
     @Enumerated(EnumType.STRING)

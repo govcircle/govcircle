@@ -22,17 +22,19 @@ public class Role extends BaseEntity {
             unique = true
     )
     private String title;
+    private String description;
 
     @Column(
             nullable = false,
             unique = true
     )
-    private String code;
+    private Integer code;
 
 
     @OneToMany(
+            mappedBy = "role",
             fetch = FetchType.LAZY,
-            cascade = CascadeType.MERGE
+            cascade = CascadeType.ALL
     )
     private List<RoleAuthority> authorities;
 

@@ -10,14 +10,21 @@ import lombok.experimental.Accessors;
 @Entity
 @Table(name = "gc_authority")
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 public class Authority extends BaseEntity {
 
-    @Column(nullable = false, unique = true)
+    @Column(
+            nullable = false,
+            unique = true
+    )
     private String title;
+    private String description;
 
-    @Column(nullable = false, unique = true)
-    private String code;
+    @Column(
+            nullable = false,
+            unique = true
+    )
+    private Integer code;
 
     @Enumerated(EnumType.STRING)
     private AuthorityType authorityType;

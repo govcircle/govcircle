@@ -12,12 +12,22 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "gc_opinion")
+@Table(
+        name = "gc_opinion",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"owner_id"}, name = "opinion_owner_unique_key")
+        }
+)
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 public class Opinion extends BaseEntity {
 
     @OneToOne
+    @JoinColumn(
+            name = "owner_id",
+            foreignKey = @ForeignKey(name = "opinion_owner_fk_id"),
+            nullable = false
+    )
     private ApplicationUser owner;
     private String intention;
 
