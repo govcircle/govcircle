@@ -1,20 +1,20 @@
 spring:
   datasource:
-    gov-circle:
-      url: jdbc:postgresql://localhost:5432/govcircle
-      username: sa
-      password: 123
-      driver-class-name: org.postgresql.Driver
+#    gov-circle:
+    url: jdbc:postgresql://localhost:5432/govcircle
+    username: sa
+    password: 123
+    driver-class-name: org.postgresql.Driver
 
-    cardano-db-sync:
-      url: jdbc:postgresql://dbsync-v3.demeter.run:5432/dbsync-preprod
-      username: dbsync1dttgevq0ffwg6jruzmq
-      password: DmQ+GUVRnpk
-      driver-class-name: org.postgresql.Driver
+#    cardano-db-sync:
+#      url: jdbc:postgresql://dbsync-v3.demeter.run:5432/dbsync-preprod
+#      username: dbsync1dttgevq0ffwg6jruzmq
+#      password: DmQ+GUVRnpk
+#      driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
     show-sql: true
     properties:
       hibernate:
@@ -23,6 +23,19 @@ spring:
   flyway:
     locations: classpath:db/store/postgresql
     out-of-order: true
-    enabled: true
     baseline-on-migrate: true
-    execute-in-transaction: false
+
+store:
+  cardano:
+    host: preprod-node.world.dev.cardano.org
+    port: 30000
+    protocol-magic: 1
+    sync-start-slot: 102902385
+    sync-start-blockhash: ec77e38fca8a52d5085e21cbe0426644578c09a00d7705cc17b187d36c004c8b
+
+
+apiPrefix: /api/v1
+
+logging:
+    file:
+      name: ./logs/yaci-store.log

@@ -28,36 +28,43 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.30</version>
 			<optional>true</optional>
 		</dependency>
+
 		<dependency>
 			<groupId>io.adabox</groupId>
 			<artifactId>ogmios-java-client</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.bloxbean.cardano</groupId>
 			<artifactId>cardano-client-lib</artifactId>
 			<version>${cardano.client.lib.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.bloxbean.cardano</groupId>
 			<artifactId>cardano-client-crypto</artifactId>
 			<version>${cardano.client.lib.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.bloxbean.cardano</groupId>
 			<artifactId>cardano-client-common</artifactId>
 			<version>${cardano.client.lib.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.bloxbean.cardano</groupId>
 			<artifactId>cardano-client-cip8</artifactId>
@@ -76,15 +83,15 @@
 			<version>${cardano.client.lib.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-data-jpa</artifactId>-->
+<!--		</dependency>-->
 
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-database-postgresql</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.flywaydb</groupId>-->
+<!--			<artifactId>flyway-database-postgresql</artifactId>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -109,7 +116,44 @@
 			<artifactId>jjwt-jackson</artifactId>
 			<version>${jjwt.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.bloxbean.cardano</groupId>
+			<artifactId>yaci-store-spring-boot-starter</artifactId>
+			<version>${yaci-store.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.bloxbean.cardano</groupId>
+			<artifactId>yaci-store-governance-spring-boot-starter</artifactId>
+			<version>${yaci-store.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.bloxbean.cardano</groupId>
+			<artifactId>yaci-store-staking-spring-boot-starter</artifactId>
+			<version>${yaci-store.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.bloxbean.cardano</groupId>
+			<artifactId>yaci-store-transaction-spring-boot-starter</artifactId>
+			<version>${yaci-store.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.bloxbean.cardano</groupId>
+			<artifactId>yaci-store-utxo-spring-boot-starter</artifactId>
+			<version>${yaci-store.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.bloxbean.cardano</groupId>
+			<artifactId>yaci-store-epoch-spring-boot-starter</artifactId>
+			<version>${yaci-store.version}</version>
+		</dependency>
+
 	</dependencies>
+
 
 	<build>
 		<plugins>
