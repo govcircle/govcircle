@@ -29,7 +29,7 @@ import java.util.Map;
 )
 public class CardanoDBSyncDataSourceConfiguration {
 
-    @Primary
+
     @Bean(name = "cardanoDBSyncEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean cardanoDBSyncEntityManagerFactory(
             @Qualifier("cardanoDBSyncDataSource") DataSource dataSource
@@ -52,7 +52,6 @@ public class CardanoDBSyncDataSourceConfiguration {
         return bean;
     }
 
-    @Primary
     @Bean(name = "cardanoDBSyncTransactionManager")
     public PlatformTransactionManager cardanoDBSyncTransactionManager(
             @Qualifier("cardanoDBSyncEntityManagerFactory") LocalContainerEntityManagerFactoryBean cardanoDBSyncEntityManagerFactory
@@ -63,7 +62,6 @@ public class CardanoDBSyncDataSourceConfiguration {
 
     }
 
-    @Primary
     @Bean(name = "cardanoDBSyncDataSource")
     public DataSource cardanoDBSyncDataSource() {
         return cardanoDBSyncDataSourceProperties()
@@ -72,7 +70,6 @@ public class CardanoDBSyncDataSourceConfiguration {
 
     }
 
-    @Primary
     @Bean(name = "cardanoDBSyncDataSourceProperties")
     @ConfigurationProperties("spring.datasource.cardano-db-sync")
     public DataSourceProperties cardanoDBSyncDataSourceProperties() {

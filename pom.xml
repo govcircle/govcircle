@@ -12,46 +12,25 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>govcircle</name>
 	<description>govcircle</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
 	<properties>
-		<java.version>17</java.version>
-		<maven.compiler.source>17</maven.compiler.source>
-		<maven.compiler.target>17</maven.compiler.target>
-		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
+		<java.version>21</java.version>
+		<maven.compiler.source>21</maven.compiler.source>
+		<yaci-store.version>2.0.0-beta4</yaci-store.version>
+		<cardano.client.lib.version>0.7.0</cardano.client.lib.version>
 		<jjwt.version>0.11.5</jjwt.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency><dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct</artifactId>
-			<version>${org.mapstruct.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -67,35 +46,36 @@
 		<dependency>
 			<groupId>com.bloxbean.cardano</groupId>
 			<artifactId>cardano-client-lib</artifactId>
-			<version>0.6.4</version>
+			<version>${cardano.client.lib.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.bloxbean.cardano</groupId>
 			<artifactId>cardano-client-crypto</artifactId>
-			<version>0.6.4</version>
+			<version>${cardano.client.lib.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.bloxbean.cardano</groupId>
 			<artifactId>cardano-client-common</artifactId>
-			<version>0.6.4</version>
+			<version>${cardano.client.lib.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.bloxbean.cardano</groupId>
 			<artifactId>cardano-client-cip8</artifactId>
-			<version>0.6.4</version>
+			<version>${cardano.client.lib.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.bloxbean.cardano</groupId>
 			<artifactId>cardano-client-backend-koios</artifactId>
-			<version>0.6.4</version>
+			<version>${cardano.client.lib.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.bloxbean.cardano</groupId>
 			<artifactId>cardano-client-backend-ogmios</artifactId>
-			<version>0.6.4</version>
+			<version>${cardano.client.lib.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -109,6 +89,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
+			<version>42.7.3</version>
 		</dependency>
 
 		<dependency>
@@ -133,40 +114,20 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.11.0</version> <configuration>
-				<source>${maven.compiler.source}</source>
-				<target>${maven.compiler.target}</target>
-				<annotationProcessorPaths>
-					<path>
-						<groupId>org.mapstruct</groupId>
-						<artifactId>mapstruct-processor</artifactId>
-						<version>${org.mapstruct.version}</version>
-					</path>
-					<path>
-						<groupId>org.projectlombok</groupId>
-						<artifactId>lombok</artifactId>
-						<version>1.18.30</version>
-					</path>
-					<path>
-						<groupId>org.projectlombok</groupId>
-						<artifactId>lombok-mapstruct-binding</artifactId>
-						<version>0.2.0</version>
-					</path>
-				</annotationProcessorPaths>
-			</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<excludes>
-						<exclude>
+					<annotationProcessorPaths>
+						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
+							<version>1.18.38</version>
+						</path>
+					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 		</plugins>
