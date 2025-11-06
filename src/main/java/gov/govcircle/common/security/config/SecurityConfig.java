@@ -17,13 +17,12 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.List;
+
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
-
     private final JwtAuthorizationFilter jwtAuthFilter;
     private final UserAddressSignatureAuthenticationProvider userAddressSignatureAuthenticationProvider;
 
@@ -31,12 +30,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-
+                .cors(crs -> crs.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/verify-signature", "/generate-nonce", "/free").permitAll()
-                        .requestMatchers("/not").hasRole("SIMPLE")
-                        .anyRequest().authenticated()
+//                                .anyRequest().permitAll()
+                                .requestMatchers(
+                                        "/verify-signature",
+                                        "/generate-nonce",
+                                        "/free"
+                                ).permitAll()
+                                .requestMatchers("/not").hasRole("SIMPLE")
+                                .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationManager(authenticationManager())
@@ -69,17 +72,25 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(
-                "http://localhost:3000"
+        configuration.setAllowedOrigins(
+                List.of(
+                        "http://localhost:3000"
 
-        ));
-        configuration.setAllowedMethods(Arrays.asList(
-                "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"
-        ));
-        configuration.setAllowedHeaders(Arrays.asList(
-                "Authorization", "Content-Type", "X-Auth-Token",
-                "Origin", "Accept", "X-Requested-With"
-        ));
+                )
+        );
+        configuration.setAllowedMethods(
+                List.of(
+                        "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"
+
+                )
+        );
+        configuration.setAllowedHeaders(
+                List.of(
+                        "Authorization", "Content-Type", "X-Auth-Token",
+                        "Origin", "Accept", "X-Requested-With"
+
+                )
+        );
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
 
@@ -87,6 +98,5 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 
 }

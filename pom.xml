@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.2</version>
+		<version>3.5.0</version>
 		<relativePath/> </parent>
 	<groupId>gov.govcirvle</groupId>
 	<artifactId>govcircle</artifactId>
@@ -83,6 +83,12 @@
 			<version>${cardano.client.lib.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.bloxbean.cardano</groupId>
+			<artifactId>cardano-client-backend-blockfrost</artifactId>
+			<version>${cardano.client.lib.version}</version>
+		</dependency>
+
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-starter-data-jpa</artifactId>-->
@@ -152,8 +158,20 @@
 			<version>${yaci-store.version}</version>
 		</dependency>
 
-	</dependencies>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.6.0</version>
+		</dependency>
 
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>1.6.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+	</dependencies>
 
 	<build>
 		<plugins>
@@ -164,12 +182,20 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version>
 				<configuration>
+					<source>${maven.compiler.source}</source> <!-- or your Java version -->
+					<target>${maven.compiler.source}</target>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
 							<version>1.18.38</version>
+						</path>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>1.6.0</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>

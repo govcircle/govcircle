@@ -65,6 +65,50 @@ public class UserDetailsInfoDTO implements UserDetails {
         );
     }
 
+
+    public UserDetailsInfoDTO(ApplicationUserDTO applicationUserDTO) {
+        this.nounc = applicationUserDTO.getNonce();
+        this.username = applicationUserDTO.getUsername();
+        this.userAddress = applicationUserDTO.getUserAddress();
+        this.authorities = new ArrayList<>(Objects.nonNull(applicationUserDTO.getRoles())
+                ? applicationUserDTO.getRoles()
+                .stream()
+                .flatMap(userRole -> userRole
+                        .getRole()
+                        .getAuthorities()
+                        .stream()
+                )
+                .map(userAuthorityDTO -> {
+                    String title = userAuthorityDTO
+                            .getAuthority()
+                            .getTitle();
+                    return new SimpleGrantedAuthority(title);
+                })
+                .toList()
+                : new ArrayList<>());
+        authorities.addAll(
+                applicationUserDTO
+                        .getRoles()
+                        .stream()
+                        .map(UserRoleDTO::getRole)
+                        .map(role -> Configs.ROLE + role.getTitle())
+                        .map(SimpleGrantedAuthority::new)
+                        .toList()
+        );
+        authorities.addAll(
+                applicationUserDTO
+                        .getAuthorities()
+                        .stream()
+                        .map(userAuthority -> {
+                            String title = userAuthority
+                                    .getAuthority()
+                                    .getTitle();
+                            return new SimpleGrantedAuthority(title);
+                        })
+                        .toList()
+        );
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;

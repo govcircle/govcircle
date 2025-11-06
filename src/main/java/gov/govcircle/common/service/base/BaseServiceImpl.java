@@ -1,4 +1,4 @@
-package gov.govcircle.common.service;
+package gov.govcircle.common.service.base;
 
 import gov.govcircle.common.security.model.dto.UserDetailsInfoDTO;
 import gov.govcircle.common.security.model.entity.ApplicationUser;
@@ -48,8 +48,7 @@ public class BaseServiceImpl implements BaseService {
                 .getContext()
                 .getAuthentication();
 
-        if (Objects.nonNull(authentication) && authentication.getPrincipal() instanceof UserDetailsInfoDTO && authentication.isAuthenticated()) {
-            UserDetailsInfoDTO userDetailsInfoDTO = (UserDetailsInfoDTO) authentication.getPrincipal();
+        if (Objects.nonNull(authentication) && authentication.getPrincipal() instanceof UserDetailsInfoDTO userDetailsInfoDTO && authentication.isAuthenticated()) {
             String userAddress = userDetailsInfoDTO.getUserAddress();
             ApplicationUser applicationUser = applicationUserRepository.findByUserAddress(userAddress)
                     .orElseThrow(() -> new UserAddressNotFoundException("No user found with provided address"));

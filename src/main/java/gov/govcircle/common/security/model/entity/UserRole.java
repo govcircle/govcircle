@@ -13,7 +13,10 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 public class UserRole extends BaseEntity {
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(
+            cascade = CascadeType.MERGE,
+            fetch = FetchType.EAGER
+    )
     @JoinColumn(
             name = "role_id",
             foreignKey = @ForeignKey(name = "ur_role_fk_id"),

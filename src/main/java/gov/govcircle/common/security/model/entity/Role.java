@@ -28,13 +28,13 @@ public class Role extends BaseEntity {
             nullable = false,
             unique = true
     )
-    private Integer code;
+    private Long code;
 
 
     @OneToMany(
             mappedBy = "role",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.MERGE
     )
     private List<RoleAuthority> authorities;
 

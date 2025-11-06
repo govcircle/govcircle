@@ -11,9 +11,13 @@ import java.util.List;
 @Entity
 @Table(name = "gc_application_user")
 @EqualsAndHashCode(callSuper = true)
-public class ApplicationUser extends BaseEntity {
+public class  ApplicationUser extends BaseEntity {
 
-    @Column(unique = true, nullable = false)
+    @Column(
+            unique = true,
+            nullable = false,
+            name = "user_address"
+    )
     private String userAddress;// staking address
     private String username;
 
@@ -23,14 +27,14 @@ public class ApplicationUser extends BaseEntity {
 
     @OneToMany(
             mappedBy = "user",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.MERGE
     )
     private List<UserAuthority> authorities;
 
     @OneToMany(
             mappedBy = "user",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.MERGE
     )
     private List<UserRole> roles;

@@ -40,10 +40,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 				"gov.govcircle.constitution.opinion.repository",
 
 				// Rule
-				"gov.govcircle.constitution.rule.repository"
-		},
-		entityManagerFactoryRef = "entityManagerFactory",
-		transactionManagerRef = "govCircleTransactionManager"
+				"gov.govcircle.constitution.rule.repository",
+
+				// Core
+				"gov.govcircle.common.repository"
+		}
+//		entityManagerFactoryRef = "entityManagerFactory",
+//		transactionManagerRef = "govCircleTransactionManager"
 
 )
 @RequiredArgsConstructor
@@ -55,6 +58,7 @@ public class GovCircleApplication implements CommandLineRunner {
 	private final AuthorityRepository authorityRepository;
 	private final RoleRepository roleRepository;
 
+
     public static void main(String[] args) {
 		SpringApplication.run(GovCircleApplication.class, args);
 	}
@@ -63,6 +67,7 @@ public class GovCircleApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("GovCircle Started");
+
 
 	}
 }

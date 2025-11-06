@@ -27,6 +27,10 @@ public class Authority extends BaseEntity {
     private Integer code;
 
     @Enumerated(EnumType.STRING)
+    @Column(
+            name = "authority_type",
+            nullable = false
+    )
     private AuthorityType authorityType;
 
 

@@ -1,4 +1,4 @@
-package gov.govcircle.common.service;
+package gov.govcircle.common.service.base;
 
 import gov.govcircle.core.entities.BaseEntity;
 

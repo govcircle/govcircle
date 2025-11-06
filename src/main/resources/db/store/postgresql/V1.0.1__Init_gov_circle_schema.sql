@@ -16,7 +16,7 @@ create table public.gc_application_user
     email         varchar(255),
     ip            varchar(255),
     nonce         varchar(255),
-    useraddress   varchar(255) not null
+    user_address   varchar(255) not null
         unique,
     username      varchar(255)
 );
@@ -73,9 +73,9 @@ create table public.gc_authority
     updated_by_id bigint
         constraint updating_user_fk_id
             references public.gc_application_user,
-    authoritytype varchar(255)
-        constraint gc_authority_authoritytype_check
-            check ((authoritytype)::text = ANY
+    authority_type varchar(255)
+        constraint gc_authority_authority_type_check
+            check ((authority_type)::text = ANY
         ((ARRAY ['CREATE'::character varying, 'READ'::character varying, 'UPDATE'::character varying, 'DELETE'::character varying])::text[])),
     description   varchar(255),
     ip            varchar(255),
@@ -330,9 +330,9 @@ create table public.gc_user_role
     user_id                 bigint not null
         constraint ur_user_fk_id
             references public.gc_application_user,
-    actorregistrationstatus varchar(255)
-        constraint gc_user_role_actorregistrationstatus_check
-            check ((actorregistrationstatus)::text = ANY
+    actor_registration_status varchar(255)
+        constraint gc_user_role_actor_registration_status_check
+            check ((actor_registration_status)::text = ANY
         ((ARRAY ['REGISTER'::character varying, 'DEREGISTER'::character varying])::text[])),
     ip                      varchar(255)
 );

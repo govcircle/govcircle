@@ -43,7 +43,8 @@ public class UserAddressSignatureAuthenticationProvider implements Authenticatio
                         userDetailsInfo.getNounc(),
                         new String(frontEndSignature.payload())
                 )
-                        && CIP30DataSigner.INSTANCE.verify(dataSignature);
+                        &&
+                        CIP30DataSigner.INSTANCE.verify(dataSignature);
 
         if (!verified) {
             throw new UserAddressVerificationException("the provided data signature is invalid");

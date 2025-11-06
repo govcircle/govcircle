@@ -53,7 +53,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
-        return !(path.startsWith("/verify") && request.getMethod().equals("POST"));
+        return !(path.startsWith("/verify-signature") && request.getMethod().equals("POST"));
 
     }
 
