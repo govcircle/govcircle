@@ -1,6 +1,6 @@
 package gov.govcircle.common.security.manager;
 
-import gov.govcircle.common.security.model.exception.AuthenticationTokenIsNotProvided;
+import gov.govcircle.common.security.model.exception.AuthenticationTokenIsNotProvidedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -23,7 +23,7 @@ public class CustomAuthenticationManager implements AuthenticationManager {
             }
 
         }
-        throw new AuthenticationTokenIsNotProvided("Authentication token is not provided");
+        throw new AuthenticationTokenIsNotProvidedException("Authentication token is not provided");
 
     }
 }

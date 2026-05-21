@@ -1,14 +1,22 @@
 package gov.govcircle;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.govcircle.common.security.repository.AuthorityRepository;
 import gov.govcircle.common.security.repository.RoleAuthorityRepository;
 import gov.govcircle.common.security.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import javax.sql.DataSource;
+import java.util.Scanner;
 
 
 @SpringBootApplication
@@ -40,29 +48,38 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 				"gov.govcircle.constitution.opinion.repository",
 
 				// Rule
-				"gov.govcircle.constitution.rule.repository"
-		},
-		entityManagerFactoryRef = "entityManagerFactory",
-		transactionManagerRef = "govCircleTransactionManager"
+				"gov.govcircle.constitution.rule.repository",
+
+				// Core
+				"gov.govcircle.common.repository"
+		}
+//		entityManagerFactoryRef = "entityManagerFactory",
+//		transactionManagerRef = "govCircleTransactionManager"
 
 )
 @RequiredArgsConstructor
-public class GovCircleApplication implements CommandLineRunner {
+public class GovCircleApplication {
 
-
-//	private final StakeAddressService stakeAddressService;
 	private final RoleAuthorityRepository roleAuthorityRepository;
 	private final AuthorityRepository authorityRepository;
 	private final RoleRepository roleRepository;
 
+
     public static void main(String[] args) {
+		System.out.println(java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments());
+		System.out.println("/////////////////////////////////////#########################");
 		SpringApplication.run(GovCircleApplication.class, args);
-	}
-
-
-	@Override
-	public void run(String... args) throws Exception {
-		System.out.println("GovCircle Started");
 
 	}
+
+
+	@Bean
+	public DSLContext dslContext(DataSource dataSource) {
+		return DSL.using(
+				dataSource,
+				SQLDialect.POSTGRES
+		);
+
+	}
+
 }

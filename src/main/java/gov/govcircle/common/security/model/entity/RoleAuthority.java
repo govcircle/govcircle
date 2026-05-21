@@ -2,15 +2,17 @@ package gov.govcircle.common.security.model.entity;
 
 import gov.govcircle.core.entities.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 @Data
 @Entity
+@Builder
 @Table(name = "gc_role_authority")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class RoleAuthority extends BaseEntity {
 
     @ManyToOne

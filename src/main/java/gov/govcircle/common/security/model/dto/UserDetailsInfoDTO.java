@@ -17,15 +17,17 @@ import java.util.Objects;
 public class UserDetailsInfoDTO implements UserDetails {
 
 
-    private String nounc;
-    private String username;
-    private String userAddress;
+    private String nonce;
+    private final String username;
+    private String identifier;
     private final List<GrantedAuthority> authorities;
 
-    public UserDetailsInfoDTO(ApplicationUser applicationUser) {
-        this.nounc = applicationUser.getNonce();
+    public UserDetailsInfoDTO(
+            ApplicationUser applicationUser,
+            String identifier
+    ) {
         this.username = applicationUser.getUsername();
-        this.userAddress = applicationUser.getUserAddress();
+        this.identifier = identifier;
         this.authorities = new ArrayList<>(Objects.nonNull(applicationUser.getRoles())
                 ? applicationUser.getRoles()
                 .stream()
@@ -47,7 +49,7 @@ public class UserDetailsInfoDTO implements UserDetails {
                         .getRoles()
                         .stream()
                         .map(UserRole::getRole)
-                        .map(role -> Configs.ROLE + role.getTitle())
+                        .map(role -> Configs.ROLES.ROLE_PREFIX + role.getTitle())
                         .map(SimpleGrantedAuthority::new)
                         .toList()
         );
@@ -63,6 +65,79 @@ public class UserDetailsInfoDTO implements UserDetails {
                         })
                         .toList()
         );
+
+    }
+
+
+    public UserDetailsInfoDTO(
+            ApplicationUserDTO applicationUserDTO,
+            String identifier
+    ) {
+        this.nonce = applicationUserDTO.getNonce();
+        this.username = applicationUserDTO.getUsername();
+        this.identifier = identifier;
+        this.authorities = new ArrayList<>();
+        if (
+                Objects.nonNull(applicationUserDTO.getRoles())
+        ) {
+            authorities.addAll(
+                    applicationUserDTO
+                            .getRoles()
+                            .stream()
+                            .map(UserRoleDTO::getRole)
+                            .map(role -> Configs.ROLES.ROLE_PREFIX + role.getTitle())
+                            .map(SimpleGrantedAuthority::new)
+                            .toList()
+            );
+
+            authorities.addAll(
+                    applicationUserDTO.getRoles()
+                            .stream()
+                            .filter(userRole -> Objects.nonNull(
+                                            userRole
+                                                    .getRole()
+                                                    .getAuthorities()
+                                    )
+                                            && !userRole
+                                            .getRole()
+                                            .getAuthorities()
+                                            .isEmpty()
+                            )
+                            .flatMap(userRole -> userRole
+                                    .getRole()
+                                    .getAuthorities()
+                                    .stream()
+                            )
+                            .map(userAuthorityDTO -> {
+                                String title = userAuthorityDTO
+                                        .getAuthority()
+                                        .getTitle();
+                                return new SimpleGrantedAuthority(title);
+                            })
+                            .toList());
+
+        }
+        if (
+                Objects.nonNull(applicationUserDTO.getAuthorities())
+                        && !applicationUserDTO
+                        .getAuthorities()
+                        .isEmpty()
+        ) {
+            authorities.addAll(
+                    applicationUserDTO
+                            .getAuthorities()
+                            .stream()
+                            .map(userAuthority -> {
+                                String title = userAuthority
+                                        .getAuthority()
+                                        .getTitle();
+                                return new SimpleGrantedAuthority(title);
+                            })
+                            .toList()
+            );
+
+        }
+
     }
 
     @Override
@@ -77,7 +152,7 @@ public class UserDetailsInfoDTO implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userAddress;
+        return username;
     }
 
     @Override

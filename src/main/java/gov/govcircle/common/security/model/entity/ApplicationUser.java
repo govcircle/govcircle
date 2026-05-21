@@ -11,26 +11,36 @@ import java.util.List;
 @Entity
 @Table(name = "gc_application_user")
 @EqualsAndHashCode(callSuper = true)
-public class ApplicationUser extends BaseEntity {
+public class  ApplicationUser extends BaseEntity {
 
-    @Column(unique = true, nullable = false)
-    private String userAddress;// staking address
+    @Column(
+            name = "username",
+            unique = true
+    )
     private String username;
-
     private UserVerificationStatus status;
+
+    @Column(
+            name = "email",
+            unique = true
+    )
     private String email;
+
+    @Column(
+            name = "ada_handle",
+            unique = true
+    )
+    private String adaHandle;
     private String nonce;
 
     @OneToMany(
             mappedBy = "user",
-            fetch = FetchType.LAZY,
             cascade = CascadeType.MERGE
     )
     private List<UserAuthority> authorities;
 
     @OneToMany(
             mappedBy = "user",
-            fetch = FetchType.LAZY,
             cascade = CascadeType.MERGE
     )
     private List<UserRole> roles;

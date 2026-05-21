@@ -9,22 +9,21 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Component
 public class JWTService {
 
     public static final String SECRET = "5367566859703373367639792F423F452848284D6251655468576D5A71347437";
+    public static final String JWT_AUTHORITIES_CLAIM = "authorities";
 
     public String generateToken(UserDetailsInfoDTO userDetailsInfo) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("authorities", userDetailsInfo.getAuthorities());
+        claims.put(JWT_AUTHORITIES_CLAIM, userDetailsInfo.getAuthorities());
         return createToken(
                 claims,
-                userDetailsInfo.getUserAddress()
+                userDetailsInfo.getIdentifier()
         );
     }
 
@@ -48,6 +47,28 @@ public class JWTService {
 
     public String extractUserAddress(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<String> extractUserAuthorities(String token) {
+        List<String> rawList = extractClaim(
+                token,
+                (claims) -> claims.get(
+                        JWT_AUTHORITIES_CLAIM,
+                        List.class
+                )
+        );
+        /* NOTE: code below code be used of you are not sure about type of the list, in this example if you are not sure about the String.class type
+         *
+         *    return Objects.nonNull(rawList) && !rawList.isEmpty()
+         *                 ? rawList.stream()
+         *                 .filter(item -> item instanceof String)
+         *                 .map(item -> (String) item)
+         *                 .toList()
+         *                 : Collections.emptyList();
+         */
+        return rawList;
+
     }
 
     public Date extractExpiration(String token) {
@@ -79,7 +100,8 @@ public class JWTService {
             UserDetailsInfoDTO userDetails
     ) {
         final String userAddress = extractUserAddress(token);
-        return (userAddress.equals(userDetails.getUserAddress()) && !isTokenExpired(token));
+        return (userAddress.equals(userDetails.getIdentifier()) && !isTokenExpired(token));
 
     }
+
 }

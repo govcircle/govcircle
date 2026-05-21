@@ -1,58 +1,111 @@
 package gov.govcircle.common.security.provider;
 
 
-import com.bloxbean.cardano.client.address.Address;
-import com.bloxbean.cardano.client.cip.cip30.CIP30DataSigner;
 import com.bloxbean.cardano.client.cip.cip30.DataSignature;
-import com.bloxbean.cardano.client.cip.cip8.COSESign1;
-import gov.govcircle.common.security.model.dto.UserAddressSignatureAuthenticationToken;
-import gov.govcircle.common.security.model.dto.UserDetailsInfoDTO;
+import com.bloxbean.cardano.client.util.HexUtil;
+import gov.govcircle.common.security.model.dto.*;
+import gov.govcircle.common.security.model.entity.CardanoActorType;
+import gov.govcircle.common.security.model.entity.UserRole;
 import gov.govcircle.common.security.model.exception.UserAddressVerificationException;
-import lombok.RequiredArgsConstructor;
+import gov.govcircle.common.security.service.UserAuthorityService;
+import gov.govcircle.common.security.service.UserRoleService;
+import gov.govcircle.common.user.service.ApplicationUserService;
+import gov.govcircle.common.util.GovCircleGovernanceUtils;
+import gov.govcircle.common.util.GovCircleSignatureUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-import java.util.Objects;
+
+import java.util.List;
+import java.util.Optional;
+
 
 @Component
-@RequiredArgsConstructor
 public class UserAddressSignatureAuthenticationProvider implements AuthenticationProvider {
+    private final UserDetailsService inMemoryCacheUserDetailsService;
+    private final ApplicationUserService applicationUserService;
+    private final UserAuthorityService userAuthorityService;
+    private final UserRoleService userRoleService;
 
-    private final UserDetailsService userDetailsService;
+    public UserAddressSignatureAuthenticationProvider(
+            @Qualifier("InMemoryCacheUserDetailsService") UserDetailsService inMemoryCacheUserDetailsService,
+            ApplicationUserService applicationUserService,
+            UserAuthorityService userAuthorityService,
+            UserRoleService userRoleService
+    ) {
+        this.inMemoryCacheUserDetailsService = inMemoryCacheUserDetailsService;
+        this.applicationUserService = applicationUserService;
+        this.userAuthorityService = userAuthorityService;
+        this.userRoleService = userRoleService;
+
+    }
 
     @Override
-    public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
-        String keyString = authentication.getDetails().toString();
-        String signatureString = authentication.getCredentials().toString();
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        UserAddressSignatureAuthenticationToken userAddressSignatureAuthenticationToken = (UserAddressSignatureAuthenticationToken) authentication;
+        String keyString = userAddressSignatureAuthenticationToken
+                .getCredentials()
+                .getKey();
+        String signatureString = userAddressSignatureAuthenticationToken
+                .getCredentials()
+                .getSignature();
         DataSignature dataSignature = new DataSignature(
                 signatureString,
                 keyString
         );
-        COSESign1 frontEndSignature = dataSignature.coseSign1();
 
-        byte[] addressBytes = frontEndSignature.headers()._protected().getAsHeaderMap().otherHeaderAsBytes("address");
-        Address address = new Address(addressBytes);
-        String bech32Address = address.toBech32();
+        String noncePayload = GovCircleSignatureUtils.getDataSignaturePayload(dataSignature);
+        CardanoActorType actorType = GovCircleSignatureUtils.getDataSignatureActorType(dataSignature);
+        byte[] cip8AddressBytes = GovCircleSignatureUtils.getCip8AddressBytesFromDataSignature(dataSignature);
+        byte[] publicKeyHash = GovCircleSignatureUtils.getCip8PublicKeyHashFromDataSignature(dataSignature);
+        String keyIdentifier = GovCircleSignatureUtils.getKeyIdentifierFromDataSignature(dataSignature);
 
-        UserDetailsInfoDTO userDetailsInfo = (UserDetailsInfoDTO) userDetailsService.loadUserByUsername(bech32Address);
-        boolean verified =
-                Objects.equals(
-                        userDetailsInfo.getNounc(),
-                        new String(frontEndSignature.payload())
-                )
-                        && CIP30DataSigner.INSTANCE.verify(dataSignature);
-
+        boolean verified = GovCircleSignatureUtils.verifySignature(
+                dataSignature,
+                true,
+                ki -> (InMemoryActorAuthenticationIdentifierDTO) inMemoryCacheUserDetailsService.loadUserByUsername(ki)
+        );
         if (!verified) {
             throw new UserAddressVerificationException("the provided data signature is invalid");
 
         }
+        if (actorType.equals(CardanoActorType.DREP) && cip8AddressBytes.length != 29) {
+            keyIdentifier = GovCircleGovernanceUtils.dRepCip129fromByte(cip8AddressBytes);
+
+        }
+        ApplicationUserDTO applicationUserDTO;
+        Optional<ApplicationUserDTO> applicationUserDTOContainer = applicationUserService.findByUserIdentifier(keyIdentifier);
+        if (applicationUserDTOContainer.isEmpty()) {
+            UserRoleDTO userRoleDTO = userRoleService.createNewUserRole(
+                    new ApplicationUserDTO(),
+                    actorType,
+                    keyIdentifier,
+                    HexUtil.encodeHexString(publicKeyHash),
+                    noncePayload
+            );
+            UserRoleDTO savedUserRoleDTO = userRoleService.save(userRoleDTO);
+            applicationUserDTO = savedUserRoleDTO.getUser();
+            List<UserRoleDTO> userRoleDTOS = userRoleService.findByUserId(applicationUserDTO.getId());
+            applicationUserDTO.setRoles(userRoleDTOS);
+            List<UserAuthorityDTO> userAuthorityDTOS = userAuthorityService.findByUserId(applicationUserDTO.getId());
+            applicationUserDTO.setAuthorities(userAuthorityDTOS);
+
+        } else {
+            applicationUserDTO = applicationUserDTOContainer.get();
+
+        }
+        UserDetailsInfoDTO userDetailsInfoDTO = new UserDetailsInfoDTO(
+                applicationUserDTO,
+                keyIdentifier
+        );
         return createAuthentication(
                 signatureString,
                 keyString,
-                userDetailsInfo
+                userDetailsInfoDTO
         );
 
     }
@@ -63,19 +116,19 @@ public class UserAddressSignatureAuthenticationProvider implements Authenticatio
 
     }
 
-    private static UserAddressSignatureAuthenticationToken createAuthentication(
+    private UserAddressSignatureAuthenticationToken createAuthentication(
             String signature,
             String key,
             UserDetails userDetails
     ) {
         UserAddressSignatureAuthenticationToken authenticationToken = new UserAddressSignatureAuthenticationToken(
-                signature,
-                key,
+                null,
                 userDetails
         );
         authenticationToken.setAuthenticated(true);
         return authenticationToken;
 
     }
+
 }
 

@@ -5,13 +5,17 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Converter
+@Component
+@RequiredArgsConstructor
 public class RuleChangeDataJsonConverter implements AttributeConverter<List<RuleChangeData>, String> {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
     @Override
     public String convertToDatabaseColumn(List<RuleChangeData> ruleChangeDataList) {

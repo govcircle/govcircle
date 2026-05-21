@@ -1,0 +1,47 @@
+[
+  bstr,               ; protected header
+  { * label => any }, ; unprotected header
+  bstr / nil,         ; message to sign
+  [                   ; signature array
+    [                     ; first signature
+      bstr                ; protected
+      { * label => any }, ; unprotected
+      bstr                ; signature
+    ]
+  ]
+]
+
+
+COSE_Sign1 = [
+  protected : bstr,         ; CBOR-encoded map (body_protected)
+  unprotected : map,        ; unprotected header map
+  payload : bstr / nil,     ; the message bytes
+  signature : bstr          ; this could be a single signature or signature array of type Sig_structure like below
+]
+
+
+body_protected_map = {
+  "alg": "EdDSA",           ; COSE alg (Ed25519)
+  "address": <bech32-or-bytes>  ; optional, recommended for v2
+}
+body_protected = CBOR.encode(body_protected_map)
+protected = bstr(body_protected)   ; put serialized map into bstr field
+
+
+Sig_structure = [
+  "Signature1",          ; context for COSE_Sign1
+  body_protected,        ; the same bytes placed in protected (empty_or_serialized_map)
+  sign_protected (absent for Sign1),
+  external_aad (h'' if none),
+  payload                ; the raw message bytes
+]
+
+
+sig = ed25519_sign(private_key, to_sign)
+
+COSE_Sign1 = [
+  protected (bstr containing serialized body_protected_map),
+  unprotected_map,
+  payload (bstr of message bytes),
+  signature (bstr)
+]

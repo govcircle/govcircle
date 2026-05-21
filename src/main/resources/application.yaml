@@ -27,15 +27,19 @@ spring:
 
 store:
   cardano:
-    host: preprod-node.world.dev.cardano.org
-    port: 30000
-    protocol-magic: 1
-    sync-start-slot: 102902385
-    sync-start-blockhash: ec77e38fca8a52d5085e21cbe0426644578c09a00d7705cc17b187d36c004c8b
-
+    host: localhost
+    port: 3001
+    protocol-magic: 42
+#    sync-start-slot: 93398400
+#    sync-start-blockhash: 3e6953497e952911d3af467c7b004d5e5d0fa8d79068074f5d65ddb6becb151a
+    n2c-host: localhost
+    n2c-port: 3333
+    devkit-node: true
 
 apiPrefix: /api/v1
 
 logging:
-    file:
-      name: ./logs/yaci-store.log
+  file:
+    name: ./logs/yaci-store.log
+server:
+  port: 8081
