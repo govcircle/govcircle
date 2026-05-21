@@ -29,10 +29,10 @@ public class AuthorityDTO {
                 RoleAuthorityDTO.builder()
                         .role(RoleDTO.spoId())
                         .authority(new AuthorityDTO(
-                                        Configs.AUTHORITY_PROPOSAL_CREATE_ID,
-                                        Configs.AUTHORITY_PROPOSAL_CREATE_TITLE,
-                                        Configs.AUTHORITY_PROPOSAL_CREATE_DESCRIPTION,
-                                        Configs.AUTHORITY_PROPOSAL_CREATE_CODE,
+                                        Configs.ROLES.AUTHORITY_PROPOSAL_CREATE_ID,
+                                        Configs.ROLES.AUTHORITY_PROPOSAL_CREATE_TITLE,
+                                        Configs.ROLES.AUTHORITY_PROPOSAL_CREATE_DESCRIPTION,
+                                        Configs.ROLES.AUTHORITY_PROPOSAL_CREATE_CODE,
                                         AuthorityType.CREATE,
                                         RoleDTO.spoId()
                                 )
@@ -48,10 +48,10 @@ public class AuthorityDTO {
                 RoleAuthorityDTO.builder()
                         .role(RoleDTO.ccId())
                         .authority(new AuthorityDTO(
-                                        Configs.AUTHORITY_PROPOSAL_CREATE_ID,
-                                        Configs.AUTHORITY_PROPOSAL_CREATE_TITLE,
-                                        Configs.AUTHORITY_PROPOSAL_CREATE_DESCRIPTION,
-                                        Configs.AUTHORITY_PROPOSAL_CREATE_CODE,
+                                        Configs.ROLES.AUTHORITY_PROPOSAL_CREATE_ID,
+                                        Configs.ROLES.AUTHORITY_PROPOSAL_CREATE_TITLE,
+                                        Configs.ROLES.AUTHORITY_PROPOSAL_CREATE_DESCRIPTION,
+                                        Configs.ROLES.AUTHORITY_PROPOSAL_CREATE_CODE,
                                         AuthorityType.CREATE,
                                         RoleDTO.ccId()
                                 )
@@ -68,10 +68,10 @@ public class AuthorityDTO {
                         .role(RoleDTO.dRepId())
                         .authority(
                                 new AuthorityDTO(
-                                        Configs.AUTHORITY_PROPOSAL_CREATE_ID,
-                                        Configs.AUTHORITY_PROPOSAL_CREATE_TITLE,
-                                        Configs.AUTHORITY_PROPOSAL_CREATE_DESCRIPTION,
-                                        Configs.AUTHORITY_PROPOSAL_CREATE_CODE,
+                                        Configs.ROLES.AUTHORITY_PROPOSAL_CREATE_ID,
+                                        Configs.ROLES.AUTHORITY_PROPOSAL_CREATE_TITLE,
+                                        Configs.ROLES.AUTHORITY_PROPOSAL_CREATE_DESCRIPTION,
+                                        Configs.ROLES.AUTHORITY_PROPOSAL_CREATE_CODE,
                                         AuthorityType.CREATE,
                                         RoleDTO.dRepId()
                                 )

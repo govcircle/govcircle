@@ -14,27 +14,33 @@ import java.util.List;
 public class  ApplicationUser extends BaseEntity {
 
     @Column(
-            unique = true,
-            nullable = false,
-            name = "user_address"
+            name = "username",
+            unique = true
     )
-    private String userAddress;// staking address
     private String username;
-
     private UserVerificationStatus status;
+
+    @Column(
+            name = "email",
+            unique = true
+    )
     private String email;
+
+    @Column(
+            name = "ada_handle",
+            unique = true
+    )
+    private String adaHandle;
     private String nonce;
 
     @OneToMany(
             mappedBy = "user",
-            fetch = FetchType.EAGER,
             cascade = CascadeType.MERGE
     )
     private List<UserAuthority> authorities;
 
     @OneToMany(
             mappedBy = "user",
-            fetch = FetchType.EAGER,
             cascade = CascadeType.MERGE
     )
     private List<UserRole> roles;

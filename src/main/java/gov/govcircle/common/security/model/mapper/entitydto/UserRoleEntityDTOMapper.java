@@ -3,11 +3,16 @@ package gov.govcircle.common.security.model.mapper.entitydto;
 import gov.govcircle.common.security.model.dto.UserRoleDTO;
 import gov.govcircle.common.security.model.entity.UserRole;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
 @Mapper(
-        componentModel = "spring"
+        componentModel = "spring",
+        uses = {
+                ApplicationUserEntityDTOMapper.class,
+                RoleEntityDTOMapper.class
+        }
 )
 public interface UserRoleEntityDTOMapper {
 

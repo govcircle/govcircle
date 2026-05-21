@@ -36,9 +36,10 @@ store:
     n2c-port: 3333
     devkit-node: true
 
-
 apiPrefix: /api/v1
 
 logging:
-    file:
-      name: ./logs/yaci-store.log
+  file:
+    name: ./logs/yaci-store.log
+server:
+  port: 8081

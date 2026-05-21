@@ -33,7 +33,6 @@ public class Role extends BaseEntity {
 
     @OneToMany(
             mappedBy = "role",
-            fetch = FetchType.EAGER,
             cascade = CascadeType.MERGE
     )
     private List<RoleAuthority> authorities;

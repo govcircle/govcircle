@@ -5,7 +5,7 @@ import com.bloxbean.cardano.yaci.core.model.certs.CertificateType;
 public enum RoleRegistrationStatus {
     REGISTER(CertificateType.REG_DREP_CERT),
     UNREGISTER(CertificateType.UNREG_DREP_CERT),
-    UPDATE(CertificateType.UPDATE_DREP_CERT),;
+    UPDATE(CertificateType.UPDATE_DREP_CERT);
 
     private final CertificateType certificateType;
 

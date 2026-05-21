@@ -11,8 +11,7 @@ import java.util.Optional;
 @Repository
 public interface ApplicationUserRepository extends JpaRepository<ApplicationUser, Long> {
 
-
-    @Query(value = "SELECT user FROM ApplicationUser user WHERE user.userAddress = :userAddress")
-    Optional<ApplicationUser> findByUserAddress(@PathVariable String userAddress);
+    @Query(value = "SELECT userRole.user FROM UserRole userRole WHERE userRole.revoked = false AND userRole.keyIdentifier = :identifier")
+    Optional<ApplicationUser> findByUserIdentifier(@PathVariable String identifier);
 
 }

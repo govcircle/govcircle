@@ -4,19 +4,19 @@ import gov.govcircle.core.entities.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
-@Data
 @Entity
+@Getter
+@Setter
 @Table(name = "gc_user_role")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class UserRole extends BaseEntity {
 
-    @ManyToOne(
-            cascade = CascadeType.MERGE,
-            fetch = FetchType.EAGER
-    )
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "role_id",
             foreignKey = @ForeignKey(name = "ur_role_fk_id"),
@@ -24,7 +24,20 @@ public class UserRole extends BaseEntity {
     )
     private Role role;
 
-    @ManyToOne
+    @Column(
+            name = "public_key_hash",
+            nullable = false
+    )
+    private String publicKeyHash;
+
+    @Column(
+            name = "key_identifier",
+            nullable = false
+    )
+    private String keyIdentifier; // payment address, DRepId, CCId, PoolId
+    private boolean revoked;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "user_id",
             foreignKey = @ForeignKey(name = "ur_user_fk_id"),

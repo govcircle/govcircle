@@ -1,6 +1,8 @@
 package gov.govcircle.common.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gov.govcircle.common.config.Configs;
+import gov.govcircle.common.security.model.vo.AuthenticationRequest;
 import gov.govcircle.common.security.model.vo.DataSignatureVO;
 import gov.govcircle.common.security.model.dto.UserAddressSignatureAuthenticationToken;
 import jakarta.servlet.FilterChain;
@@ -14,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.io.ObjectInputFilter;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -28,17 +31,16 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-        String dataSignature = request
+        String authenticationRequest = request
                 .getReader()
                 .lines()
                 .collect(Collectors.joining(System.lineSeparator()));
-        DataSignatureVO dataSignatureVO = mapper.readValue(
-                dataSignature,
-                DataSignatureVO.class
+        AuthenticationRequest authenticationRequestVO = mapper.readValue(
+                authenticationRequest,
+                AuthenticationRequest.class
         );
         UserAddressSignatureAuthenticationToken authenticationToken = new UserAddressSignatureAuthenticationToken(
-                dataSignatureVO.signature(),
-                dataSignatureVO.key(),
+                authenticationRequestVO,
                 null
         );
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
@@ -53,7 +55,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
-        return !(path.startsWith("/verify-signature") && request.getMethod().equals("POST"));
+        return !(path.startsWith(Configs.URLS.REST_VERIFY_SIGNATURE_ENDPOINT) && request.getMethod().equals("POST"));
 
     }
 

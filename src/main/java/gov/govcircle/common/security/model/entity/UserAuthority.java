@@ -4,10 +4,13 @@ import gov.govcircle.core.entities.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
-@Data
 @Entity
+@Getter
+@Setter
 @Table(name = "gc_user_authority")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)

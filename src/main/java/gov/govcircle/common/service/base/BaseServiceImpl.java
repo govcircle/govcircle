@@ -27,8 +27,8 @@ public class BaseServiceImpl implements BaseService {
 
         if (Objects.nonNull(authentication) && authentication.getPrincipal() instanceof UserDetailsInfoDTO && authentication.isAuthenticated()) {
             UserDetailsInfoDTO userDetailsInfoDTO = (UserDetailsInfoDTO) authentication.getPrincipal();
-            String userAddress = userDetailsInfoDTO.getUserAddress();
-            ApplicationUser applicationUser = applicationUserRepository.findByUserAddress(userAddress)
+            String identifier = userDetailsInfoDTO.getIdentifier();
+            ApplicationUser applicationUser = applicationUserRepository.findByUserIdentifier(identifier)
                     .orElseThrow(() -> new UserAddressNotFoundException("No user found with provided address"));
             baseEntity.setCreatedBy(applicationUser);
             baseEntity.setUpdatedBy(applicationUser);
@@ -49,8 +49,8 @@ public class BaseServiceImpl implements BaseService {
                 .getAuthentication();
 
         if (Objects.nonNull(authentication) && authentication.getPrincipal() instanceof UserDetailsInfoDTO userDetailsInfoDTO && authentication.isAuthenticated()) {
-            String userAddress = userDetailsInfoDTO.getUserAddress();
-            ApplicationUser applicationUser = applicationUserRepository.findByUserAddress(userAddress)
+            String identifier = userDetailsInfoDTO.getIdentifier();
+            ApplicationUser applicationUser = applicationUserRepository.findByUserIdentifier(identifier)
                     .orElseThrow(() -> new UserAddressNotFoundException("No user found with provided address"));
             baseEntity.setCreatedBy(applicationUser);
             baseEntity.setUpdatedBy(applicationUser);
@@ -61,4 +61,5 @@ public class BaseServiceImpl implements BaseService {
         return baseEntity;
 
     }
+
 }
